@@ -34,6 +34,24 @@ namespace System.ComponentModel.DataAnnotations
         }
 
         [Fact]
+        public static void RequiresValidationContext_return_false_for_valid_validation_type_and_one_arg_method() {
+            var attribute = new CustomValidationAttribute(typeof(CustomValidator), "CorrectValidationMethodOneArg");
+            Assert.False(attribute.RequiresValidationContext);
+
+            attribute = new CustomValidationAttribute(typeof(CustomValidator), "CorrectValidationMethodOneArgStronglyTyped");
+            Assert.False(attribute.RequiresValidationContext);
+        }
+
+        [Fact]
+        public static void RequiresValidationContext_return_true_for_valid_validation_type_and_two_arg_method() {
+            var attribute = new CustomValidationAttribute(typeof(CustomValidator), "CorrectValidationMethodTwoArgs");
+            Assert.True(attribute.RequiresValidationContext);
+
+            attribute = new CustomValidationAttribute(typeof(CustomValidator), "CorrectValidationMethodTwoArgsStronglyTyped");
+            Assert.True(attribute.RequiresValidationContext);
+        }
+
+        [Fact]
         public static void Validate_throws_InvalidOperationException_for_invalid_ValidatorType()
         {
             var attribute = new CustomValidationAttribute(null, "Does not matter");
